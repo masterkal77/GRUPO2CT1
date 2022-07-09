@@ -21,7 +21,6 @@ public class Login {
 	
 	public int login(String usuario, String contrasenia) {
 		int resultado = 0;
-		Usuario user = new Usuario();
 		usarConexion = conn.conectar();
 		String consulta = "SELECT * FROM usuario WHERE nombreUsuario = '"+usuario+"' AND contrasenia = '"+contrasenia+"'";
 		
