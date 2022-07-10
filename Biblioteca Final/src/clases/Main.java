@@ -118,6 +118,12 @@ public class Main {
 			break;
 		
 		case 3: 
+			
+			//Usuario newUser = new Usuario();
+			//newUser.cargarUsuario(2);
+			//String nick = newUser.getNombreUsuario();
+			//System.out.println(nick);
+			
 			System.out.println("+------------------------------------------------------------------+");
 			System.out.println("|                         NUEVO USUARIO                            |");
 			System.out.println("+------------------------------------------------------------------+");
@@ -137,6 +143,7 @@ public class Main {
 			String email = teclado.next();
 			int userType = 2;
 			int state = 1;
+			
 			Consulta existe = new Consulta();
 			int resultado = existe.existeUsuario(nick);
 			if (resultado == 0) {
@@ -149,6 +156,7 @@ public class Main {
 				try { Thread.sleep(1500); 
 				  } catch(InterruptedException ex) 
 				  { Thread.currentThread().interrupt(); }
+				menuUsuario(2);
 				
 			}
 			else {
@@ -159,7 +167,8 @@ public class Main {
 				System.out.println("| (1) SI                                                           |");
 				System.out.println("| (2) NO (volver al menu anterior)                                 |");
 				System.out.printf("|  Ingrese su opción: ");
-				if (teclado.nextInt() == 1)
+				int opc = teclado.nextInt();
+				if ( opc == 1)
 					opciones(3);
 				else opciones(Menu());
 				
@@ -188,7 +197,7 @@ public class Main {
 			break;
 		
 		}
-		teclado.close();
+		//teclado.close();
 		
 	}
 	
@@ -214,6 +223,15 @@ public class Main {
 			System.out.println("+------------------------------------------------------------------+");
 			System.out.printf("| Ingrese su opción: ");
 			opcion = teclado.nextInt();
+			if (opcion == 8) {
+				try { Thread.sleep(1000); 
+				  } catch(InterruptedException ex) 
+				  { Thread.currentThread().interrupt(); }
+				opciones(Menu());
+			}
+				
+			else accionesAdmin(opcion);
+						
 			break;
 		case 2:
 			System.out.println("+------------------------------------------------------------------+");
@@ -230,6 +248,9 @@ public class Main {
 			System.out.println("+------------------------------------------------------------------+");
 			System.out.printf("| Ingrese su opción: ");
 			opcion = teclado.nextInt();
+			if (opcion == 6)
+				opciones(Menu());
+			else accionesUser(opcion);
 			break;
 		case 4:
 			System.out.println("+------------------------------------------------------------------+");
@@ -250,5 +271,187 @@ public class Main {
 			opciones(Menu());
 			break;
 		}
+	}
+	
+	public static void accionesAdmin(int op) {
+		Scanner teclado = new Scanner(System.in);
+		int opcion;
+		
+		switch(op) {
+		case 1:
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|                  Administradores - Biblioteca 2.0                |");
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|                                                                  |");
+			System.out.println("| (1) Crear un nuevo usuario administrador                         |");
+			System.out.println("| (2) Ver datos de un Administrador                                |");
+			System.out.println("| (3) Actualizar datos de un Administrador                         |");
+			System.out.println("| (4) Borrar un usuario Administrador                              |");
+			System.out.println("| (5) Salir                                                        |");
+			System.out.println("|                                                                  |");
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.printf("| Ingrese su opción: ");
+			opcion = teclado.nextInt();
+			crudUsuarios(opcion, 1);
+			
+			break;
+		case 2:
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|                  Administradores - Biblioteca 2.0                |");
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|                                                                  |");
+			System.out.println("| (1) Ver cuotas impagas                                           |");
+			System.out.println("| (2) Registrar cuota pagada                                       |");
+			System.out.println("| (3) Actualizar datos de un Administrador                         |");
+			System.out.println("| (4) Borrar un usuario Administrador                              |");
+			System.out.println("| (5) Salir                                                        |");
+			System.out.println("|                                                                  |");
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.printf("| Ingrese su opción: ");
+			opcion = teclado.nextInt();
+			
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+		case 5:
+			
+			break;
+		case 6:
+			
+			break;
+		case 7:
+			
+			break;
+		default:
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|          REGRESANDO AL MENU ANTERIOR...                          |");
+			System.out.println("+------------------------------------------------------------------+");
+			try { Thread.sleep(1500); 
+			  } catch(InterruptedException ex) 
+			  { Thread.currentThread().interrupt(); }
+			menuUsuario(1);
+			break;
+		
+		}
+		
+		
+	}
+	public static void accionesUser(int op) {
+		
+	}
+	public static void crudUsuarios(int op, int tipo) {
+		Scanner teclado = new Scanner(System.in);
+		Usuario user = new Usuario();
+		Consulta consul = new Consulta();
+	
+		if (tipo == 1) {
+			switch(op) {
+			case 1:
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|                         NUEVO ADMINISTRADOR                      |");
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|                                                                  |");
+				System.out.println("|                                                                  |");
+				System.out.printf("   Ingrese nombre de Usuario: ");
+				String nick = teclado.nextLine();
+				System.out.printf("   Ingrese contraseña: ");
+				String pass = teclado.nextLine();
+				System.out.printf("   Ingrese Nombre: ");
+				String name = teclado.nextLine();
+				System.out.printf("   Ingrese Apellido: ");
+				String surname = teclado.nextLine();
+				System.out.printf("   Ingrese DNI: ");
+				int dni = teclado.nextInt();
+				System.out.printf("   Ingrese dirección de correo electronico: ");
+				String email = teclado.next();
+				int userType = 1;
+				int state = 1;
+				Consulta existe = new Consulta();
+				int resultado = existe.existeUsuario(nick);
+				if (resultado == 0) {
+					Usuario newUser = new Usuario(name, surname, email, nick, pass, userType, state, dni);
+					existe.insertarUsuario(newUser);
+					System.out.println("+------------------------------------------------------------------+");			
+				}
+				accionesAdmin(1);
+				break;
+			case 2:
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|                  Administradores - Biblioteca 2.0                |");
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|                                                                  |");
+				System.out.printf("|  Ingrese el nombre de USUARIO a buscar: ");
+				user = consul.buscarUsuario(teclado.next());
+				if (user == null || user.getTipoUsuario() != 1) {
+					System.out.println("+------------------------------------------------------------------+");
+					System.out.println("|    NOMBRE DE USUARIO ADMINISTRADOR ERRÓNEO O INEXISTENTE         |");
+					System.out.println("|    Regresando al menu anterior...                                |");
+					System.out.println("+------------------------------------------------------------------+");
+					try { Thread.sleep(2500); 
+					  } catch(InterruptedException ex) 
+					  { Thread.currentThread().interrupt(); }
+					accionesAdmin(1);
+				} else {
+					user.mostrarDatos();
+					System.out.println("|  TOME NOTA Y PRESIONE UNA TECLA + 'ENTER' PARA CONTINUAR         |");
+					System.out.println("+------------------------------------------------------------------+");
+					String a = teclado.next();
+					accionesAdmin(1);
+					
+				}
+				
+				break;
+			case 3:
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|                  Administradores - Biblioteca 2.0                |");
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|                                                                  |");
+				System.out.printf("|  Ingrese el nombre de USUARIO a MODIFICAR: ");
+				user = consul.buscarUsuario(teclado.next());
+				if (user == null || user.getTipoUsuario() != 1) {
+					System.out.println("+------------------------------------------------------------------+");
+					System.out.println("|    NOMBRE DE USUARIO ADMINISTRADOR ERRÓNEO O INEXISTENTE         |");
+					System.out.println("|    Regresando al menu anterior...                                |");
+					System.out.println("+------------------------------------------------------------------+");
+					try { Thread.sleep(2500); 
+					  } catch(InterruptedException ex) 
+					  { Thread.currentThread().interrupt(); }
+					accionesAdmin(1);
+				} else {
+					user.cargarUsuario(1);
+					consul.actualizarUsuario(user, user.getIdUsuario());
+					System.out.println("+------------------------------------------------------------------+");
+					System.out.println("|          REGRESANDO AL MENU ANTERIOR...                          |");
+					System.out.println("+------------------------------------------------------------------+");
+					try { Thread.sleep(1500); 
+					  } catch(InterruptedException ex) 
+					  { Thread.currentThread().interrupt(); }
+					accionesAdmin(1);
+				}
+				
+				break;
+			case 4:
+				
+				break;
+			default:
+				System.out.println("+------------------------------------------------------------------+");
+				System.out.println("|          REGRESANDO AL MENU ANTERIOR...                          |");
+				System.out.println("+------------------------------------------------------------------+");
+				try { Thread.sleep(1500); 
+				  } catch(InterruptedException ex) 
+				  { Thread.currentThread().interrupt(); }
+				menuUsuario(1);
+				break;
+			}
+		}else {
+			
+		}
+		
+		
 	}
 }

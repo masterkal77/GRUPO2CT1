@@ -83,6 +83,8 @@ public class Consulta {
 		}
 	}
 	
+	// ---------------------------- METODOS PARA USUARIOS --------------------------------
+	
 	public int existeUsuario(String usuario) {
 		int resultado = 0;
 		usarConexion = conn.conectar();
@@ -121,7 +123,12 @@ public class Consulta {
 			System.out.println("|            Se agregó correctamente el usuario                    |");
 			
 		}catch (Exception e) {
-			System.out.println("Ocurrio un error inesperado"+ " "+e);
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("         OCURRIO UN ERROR INESPERADO " + e);
+			System.out.println("+------------------------------------------------------------------+");
+			try { Thread.sleep(2500); 
+			  } catch(InterruptedException ex) 
+			  { Thread.currentThread().interrupt(); }
 		}
 	}
 	
@@ -145,4 +152,57 @@ public class Consulta {
 		}
 		return resultado;
 	}
+	
+	public Usuario buscarUsuario(String nombre) {
+		//devuelve el usuario buscado en base al nombreUsuario en caso de no encontrar devuelve null
+		Usuario nuevoUsuario = new Usuario();
+		
+		try {
+			usarConexion = conn.conectar(); 
+			String consulta = "SELECT * FROM usuario WHERE nombreUsuario='"+nombre+"'";
+			stm = usarConexion.createStatement();
+			rs = stm.executeQuery(consulta); 
+			if (rs.next()) {
+				nuevoUsuario.setIdUsuario(rs.getInt(1));
+				nuevoUsuario.setNombreUsuario(rs.getString(2));
+				nuevoUsuario.setPassword(rs.getString(3));
+				nuevoUsuario.setTipoUsuario(rs.getInt(4));
+				nuevoUsuario.setNombre(rs.getString(5));
+				nuevoUsuario.setApellido(rs.getString(6));
+				nuevoUsuario.setDni(rs.getInt(7));
+				nuevoUsuario.setMail(rs.getString(8));
+				nuevoUsuario.setEstado(rs.getInt(9));
+				} else nuevoUsuario = null;
+		}catch (Exception e) {
+			System.out.println("Ocurrio un error inesperado"+ " "+e);
+		}		
+		return nuevoUsuario;
+	}
+	public void actualizarUsuario(Usuario user, int id) {
+		//actualiza los datos del usuario en base a su id con los datos de user
+		try {
+			usarConexion = conn.conectar();
+			String consulta ="UPDATE usuario SET nombreUsuario=?, contrasenia=?, tipoUsuario=?, nombre=?, apellido=?, dni=?, email=? WHERE id_Usuario=?";
+			ps = usarConexion.prepareStatement(consulta);
+			ps.setObject(1, user.getNombreUsuario());
+			ps.setObject(2, user.getPassword());
+			ps.setObject(3, user.getTipoUsuario());
+			ps.setObject(4, user.getNombre());
+			ps.setObject(5, user.getApellido());
+			ps.setObject(6, user.getDni());
+			ps.setObject(7, user.getMail());
+			ps.setObject(8, id);
+			ps.executeUpdate();
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("  Se actualizó correctamente el usuario "+user.getNombreUsuario());
+		}catch (Exception e) {
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("         OCURRIO UN ERROR INESPERADO " + e);
+			System.out.println("+------------------------------------------------------------------+");
+			try { Thread.sleep(2500); 
+			  } catch(InterruptedException ex) 
+			  { Thread.currentThread().interrupt(); }
+		}
+	}
+	
 }

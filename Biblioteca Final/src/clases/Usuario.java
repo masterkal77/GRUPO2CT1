@@ -12,6 +12,7 @@ public class Usuario {
 	private int tipoUsuario; //1: Admin, 2:Socio, 3:Visitante, 4:Baja
 	private int estado; //1 activo, 0 deudor
 	private int dni;
+	private int idUsuario;
 	
 	//Constructores
 	public Usuario() {
@@ -29,15 +30,15 @@ public class Usuario {
 		this.dni = dni;
 	}
 	
-	public Usuario(String nom, String ape, String mail, String nick, String pass, int tipo, int dni) {
+	/*public Usuario(String nom, String ape, String mail, String nick, String pass, int tipo, int dni) {
 		this.nombre = nom;
 		this.apellido = ape;
 		this.mail = mail;
 		this.nombreUsuario = nick;
 		this.password = pass;
 		this.tipoUsuario = tipo;
-		this.dni = dni;
-	}
+		this.dni = dni; 
+	}*/
 	
 	public Usuario(Usuario u) {
 		this.nombre = u.nombre;
@@ -83,6 +84,10 @@ public class Usuario {
 		this.dni = d;
 	}
 	
+	public void setIdUsuario(int id) {
+		this.idUsuario = id;
+	}
+	
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -115,15 +120,26 @@ public class Usuario {
 		return this.dni;
 	}
 	
+	public int getIdUsuario() {
+		return this.idUsuario;
+	}
 	//Metodos propios
 	
 	public void mostrarDatos() {
-		System.out.println("Los datos son: ");
-		System.out.println("Nombre y Apellido: " +this.nombre +" " +this.apellido);
-		System.out.println("DNI: "+this.dni);
-		System.out.println("email: "+this.mail);
-		System.out.println("Nombre de Usuario: " +this.nombreUsuario);
-		System.out.println("Usuario de tipo: " +determinarTipoUsuario(this.tipoUsuario));
+		System.out.println("+------------------------------------------------------------------+");
+		System.out.println("|                     DATOS DEL USUARIO                            |");
+		System.out.println("+------------------------------------------------------------------+");
+		System.out.println("|                                                                  |");
+		System.out.println("|                                                                  |");
+		System.out.println("|   Nombre de Usuario: " +this.nombreUsuario);
+		System.out.println("|   Nombre y Apellido: " +this.nombre +" " +this.apellido);
+		System.out.println("|   DNI: "+this.dni);
+		System.out.println("|   email: "+this.mail);
+		System.out.println("|   Usuario de tipo: " +determinarTipoUsuario(this.tipoUsuario));
+		System.out.println("|   Estado: "+this.estado);
+		System.out.println("+------------------------------------------------------------------+");
+		
+		
 	}
 
 	public String determinarTipoUsuario(int t) {
@@ -140,9 +156,30 @@ public class Usuario {
 		*/
 	}
 
-	public void cargarUsuario() {
+	public void cargarUsuario(int tipo) {
 		try (Scanner teclado = new Scanner(System.in)) {
-			System.out.println("Ingrese Nombre");
+			
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|                         NUEVO USUARIO                            |");
+			System.out.println("+------------------------------------------------------------------+");
+			System.out.println("|                                                                  |");
+			System.out.println("|                                                                  |");
+			System.out.printf("   Ingrese nombre de Usuario: ");
+			this.nombreUsuario = teclado.nextLine();
+			System.out.printf("   Ingrese contraseña: ");
+			this.password = teclado.nextLine();
+			System.out.printf("   Ingrese su Nombre: ");
+			this.nombre = teclado.nextLine();
+			System.out.printf("   Ingrese su Apellido: ");
+			this.apellido = teclado.nextLine();
+			System.out.printf("   Ingrese su DNI: ");
+			this.dni = teclado.nextInt();
+			System.out.printf("   Ingrese su  dirección de correo electronico: ");
+			this.mail = teclado.next();
+			this.tipoUsuario = tipo;
+			this.estado = 1;
+			
+			/*System.out.println("Ingrese Nombre");
 			this.nombre = teclado.nextLine();
 			System.out.println("Ingrese Apellido");
 			this.apellido = teclado.nextLine();
@@ -156,6 +193,7 @@ public class Usuario {
 			this.dni = teclado.nextInt();
 			System.out.println("Ingrese el tipo de Usuario: \n 1) Administrador \n 2) Socio \n 4) De baja / suspendido");
 			this.tipoUsuario = teclado.nextInt();
+			*/
 		}
 	}
 }
